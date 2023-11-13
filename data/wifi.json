@@ -1,0 +1,23 @@
+{
+    "WIFI_1": {
+        "Configuration" :{
+            "SSID": "choupinetwork",
+            "password": "Sabrina1985*"
+        }
+    },
+
+    "WIFI_2": {
+        "Configuration" :{
+            "SSID": "choupinetwork ng",
+            "password": "Sabrina1985*"
+        }
+    },
+
+    "WIFI_3": {
+        "Configuration" :{
+            "SSID": "Thomthom-mobile",
+            "password": "3347501001"
+        }
+    }
+
+}

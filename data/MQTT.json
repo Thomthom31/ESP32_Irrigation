@@ -1,0 +1,20 @@
+{
+    "MQTT": {
+        "General": {
+            "MQTT_serveur": "192.168.1.200",
+            "MQTT_port": "1883*",
+            "MQTT_user": "Votre_nom_d_utilisateur_MQTT",
+            "MQTT_client": "ESP32_irrigation",
+            "MQTT_password": "mot de pass MQTT",
+            "MQTT_subscribe_1": "irrigation",
+            "MQTT_subscribe_2": "serre/irrigation2/pompe",
+            "MQTT_publish_1": "serre/meteo",
+            "MQTT_publish_2": "serre/meteo2",
+            "MQTT_publish_1_periode": 60,
+            "MQTT_publish_2_periode": 60,
+            "MQTT_subscribe_1_periode": 60,
+            "MQTT_subscribe_2_periode": 60
+        }    
+    }
+}
+

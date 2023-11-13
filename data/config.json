@@ -1,0 +1,199 @@
+{
+    "GENERAL": {
+        "Boucle": {
+            "Periode" : 1000
+        },
+        "LED_3_coul": {
+            "Enable" : false
+        },
+        "Buzzer" : {
+            "Enable" : false
+        }
+    },
+    "RESEAU": {
+        "WIFI": {
+            "Enable" : true
+        },
+
+        "NTP": {
+            "Enable" : true
+        },
+        "MQTT": {
+            "Enable" : true
+        },
+        "WEB": {
+            "Enable" : true
+        }
+    },
+    "CAPTEUR": {
+        "BME280": {
+            "Enable" : true
+        },
+        "BMP280": {
+            "Enable" : false
+        },                
+        "Impulsion_1": {
+            "Enable" : true,
+            "Quadratique" : false,
+            "Temps_integration" : 10,
+            "PIN_impulsion" : 13,
+            "PIN_quadratique" : 14
+        },
+        "Impulsion_2": {
+            "Enable" : false,
+            "Quadratique" : false,
+            "Temps_integration" : 10,
+            "PIN_impulsion" : 13,
+            "PIN_quadratique" : 14
+        },       
+        "PT100_1": {
+            "Enable" : false,
+            "PIN_PT100" : 0
+        },
+        "PT100_2": {
+            "Enable" : false,
+            "PIN_PT100" : 0
+        },
+        "PT100_3": {
+            "Enable" : false,
+            "PIN_PT100" : 0
+        },
+        "PT100_4": {
+            "Enable" : false,
+            "PIN_PT100" : 0
+        },
+        "Sonde_1": {
+            "Enable" : false,
+            "PIN_Sonde" : 0
+        },
+        "Sonde_2": {
+            "Enable" : false,
+            "PIN_Sonde" : 0
+        },
+        "Sonde_3": {
+            "Enable" : false,
+            "PIN_Sonde" : 0
+        },
+        "Sonde_4": {
+            "Enable" : false,
+            "PIN_Sonde" : 0
+        },
+        "Telemetre": {
+            "Enable" : false
+        }
+    },
+    "GPIO":{
+        "EXT_OUT_PCF8574_1": {
+            "Enable" : true,
+            "Adresse" : 32
+        },
+        "EXT_OUT_PCF8574_2": {
+            "Enable" : false,
+            "Adresse" : 33
+        },         
+        "GPIO_OUT_1": {
+            "Enable" : false,
+            "PIN_OUT" : 0
+        },
+        "GPIO_OUT_2": {
+            "Enable" : false,
+            "PIN_OUT" : 0
+        },
+        "GPIO_OUT_3": {
+            "Enable" : false,
+            "PIN_OUT" : 0
+        },
+        "GPIO_OUT_4": {
+            "Enable" : false,
+            "PIN_OUT" : 0
+        },
+        "GPIO_OUT_5": {
+            "Enable" : false,
+            "PIN_OUT" : 0
+        },
+        "GPIO_OUT_6": {
+            "Enable" : false,
+            "PIN_OUT" : 0
+        },
+        "GPIO_OUT_7": {
+            "Enable" : false,
+            "PIN_OUT" : 0
+        },
+        "GPIO_OUT_8": {
+            "Enable" : false,
+            "PIN_OUT" : 0
+        },
+        "GPIO_IN_1": {
+            "Enable" : false,
+            "PIN_IN" : 0,
+            "Pull_up" : true
+        },
+        "GPIO_IN_2": {
+            "Enable" : false,
+            "PIN_IN" : 0,
+            "Pull_up" : true
+        },
+        "GPIO_IN_3": {
+            "Enable" : false,
+            "PIN_IN" : 0,
+            "Pull_up" : true
+        },
+        "GPIO_IN_4": {
+            "Enable" : false,
+            "PIN_IN" : 0,
+            "Pull_up" : true
+        },
+        "GPIO_IN_5": {
+            "Enable" : false,
+            "PIN_IN" : 0,
+            "Pull_up" : true
+        },
+        "GPIO_IN_6": {
+            "Enable" : false,
+            "PIN_IN" : 0,
+            "Pull_up" : true
+        },
+        "GPIO_IN_7": {
+            "Enable" : false,
+            "PIN_IN" : 0,
+            "Pull_up" : true
+        },
+        "GPIO_IN_8": {
+            "Enable" : false,
+            "PIN_IN" : 0,
+            "Pull_up" : true
+        },
+        "GPIO_ANA_1": {
+            "Enable" : false,
+            "PIN_IN" : 0
+        },
+        "GPIO_ANA_2": {
+            "Enable" : false,
+            "PIN_IN" : 0
+        },
+        "GPIO_ANA_3": {
+            "Enable" : false,
+            "PIN_IN" : 0
+        },
+        "GPIO_ANA_4": {
+            "Enable" : false,
+            "PIN_IN" : 0
+        },
+        "GPIO_ANA_5": {
+            "Enable" : false,
+            "PIN_IN" : 0
+        },
+        "GPIO_ANA_6": {
+            "Enable" : false,
+            "PIN_IN" : 0
+        },
+        "GPIO_ANA_7": {
+            "Enable" : false,
+            "PIN_IN" : 0
+        },
+        "GPIO_ANA_8": {
+            "Enable" : false,
+            "PIN_IN" : 0
+        }
+    }
+}
