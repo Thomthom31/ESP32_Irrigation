@@ -1,0 +1,3 @@
+[submodule "ESP_base_MQTT_bridge"]
+	path = ESP_base_MQTT_bridge
+	url = https://github.com/Thomthom31/ESP_base_MQTT_bridge.git
