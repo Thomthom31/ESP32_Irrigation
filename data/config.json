@@ -196,33 +196,59 @@
             "PIN_IN" : 0
         }
     },
-    "PWM":{
-        "PWM_OUT_1": {
+    "ServoMoteur":{
+        "ServoMoteur_OUT_1": {
             "Enable" : false,
             "Defaut" : 90,
             "Angle_min" : 544,
             "Angle_max" : 2400,
+            "PIN_OUT" : 0
+        },
+        "ServoMoteur_OUT_2": {
+            "Enable" : false,
+            "Defaut" : 90,
+            "Angle_min" : 544,
+            "Angle_max" : 2400,
+            "PIN_OUT" : 0
+        },
+        "ServoMoteur_OUT_3": {
+            "Enable" : false,
+            "Defaut" : 90,
+            "Angle_min" : 544,
+            "Angle_max" : 2400,
+            "PIN_OUT" : 0
+        },
+        "ServoMoteur_OUT_4": {
+            "Enable" : false,
+            "Defaut" : 90,
+            "Angle_min" : 544,
+            "Angle_max" : 2400,
+            "PIN_OUT" : 0
+        }
+    },
+    "PWM":{
+        "PWM_OUT_1": {
+            "Enable" : false,
+            "DutyCycle" : 0,
+            "Frequence" : 400,
             "PIN_OUT" : 0
         },
         "PWM_OUT_2": {
             "Enable" : false,
-            "Defaut" : 90,
-            "Angle_min" : 544,
-            "Angle_max" : 2400,
+            "DutyCycle" : 0,
+            "Frequence" : 400,
             "PIN_OUT" : 0
         },
         "PWM_OUT_3": {
             "Enable" : false,
-            "Defaut" : 90,
-            "Angle_min" : 544,
-            "Angle_max" : 2400,
+            "DefDutyCycleaut" : 0,
+            "Frequence" : 400,
             "PIN_OUT" : 0
         },
         "PWM_OUT_4": {
             "Enable" : false,
-            "Defaut" : 90,
-            "Angle_min" : 544,
-            "Angle_max" : 2400,
+            "DutyCycle" : 0,
+            "Frequence" : 400,
             "PIN_OUT" : 0
         }
     }

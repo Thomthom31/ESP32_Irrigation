@@ -18,6 +18,7 @@
 #include "capteurs.h"
 #include "reseau_serveur.h"
 #include "File_System.h"
+#include "GPIO.h"
 #include "global.h"
 
 
@@ -512,9 +513,9 @@ void update_Subscribe1(String mqttSubscribe, char* topic, char* payload, unsigne
   //Recherche de la voie pour un topic voie
   for (int i = 0; i < 8; i++) {
     
+    //Pour un topic PCF8574_OUT
     sprintf(topicBuffer, "%s/PCF8574_OUT_1_%d",mqttSubscribe, i + 1);
     Serial.println(topicBuffer);
-
     if (strcmp(topic, topicBuffer) == 0) {
 
       StaticJsonDocument<200> jsonDoc; // Ajustez la taille en fonction de votre message JSON
@@ -556,6 +557,43 @@ void update_Subscribe1(String mqttSubscribe, char* topic, char* payload, unsigne
       Serial.println("Changement Etat de Sortie Bit " + String(NumPort) + " Valeur : " + String(ValPort)) ;
       GPIO_OUT(NumPort, ValPort);
     }
+
+  //Pour un topic ServoMoteur
+  sprintf(topicBuffer, "%s/ServoMoteur",mqttSubscribe);
+  Serial.println(topicBuffer);
+    if (strcmp(topic, topicBuffer) == 0) {
+      StaticJsonDocument<200> jsonDoc; // Ajustez la taille en fonction de votre message JSON
+      DeserializationError error = deserializeJson(jsonDoc, message);
+        if (error) {
+          Serial.print("Erreur lors de la désérialisation JSON: ");
+          Serial.println(error.c_str());
+          return;
+        }
+      
+      uint8_t ValPort = jsonDoc["val_servo"]; 
+      uint8_t NumPort = jsonDoc["num_servo"];
+      Serial.println("Changement Etat de Sortie servo " + String(NumPort) + " Valeur : " + String(ValPort)) ;
+      ServoMoteur_OUT(NumPort, ValPort);
+    }
+
+  //Pour un topic PWM
+  sprintf(topicBuffer, "%s/PWM",mqttSubscribe);
+  Serial.println(topicBuffer);
+    if (strcmp(topic, topicBuffer) == 0) {
+      StaticJsonDocument<200> jsonDoc; // Ajustez la taille en fonction de votre message JSON
+      DeserializationError error = deserializeJson(jsonDoc, message);
+        if (error) {
+          Serial.print("Erreur lors de la désérialisation JSON: ");
+          Serial.println(error.c_str());
+          return;
+        }
+      
+      uint8_t ValPort = jsonDoc["val_servo"]; 
+      uint8_t NumPort = jsonDoc["num_servo"];
+      Serial.println("Changement Etat de Sortie servo " + String(NumPort) + " Valeur : " + String(ValPort)) ;
+      PWM_OUT(NumPort, ValPort);
+    }
+
 }
 
 /**

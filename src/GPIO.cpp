@@ -11,7 +11,8 @@
  */
 #include <Wire.h>
 #include <PCF8574.h>
-#include <Servo.h>
+#include <ESP32Servo.h>
+#include <ESP32PWM.h>
 #include "File_System.h"
 #include "global.h"
 
@@ -47,6 +48,17 @@ ServoMoteurConfig Tab_ServoMoteur[4];
 
 // Déclaration des objets Servo
 Servo servo[4];
+
+struct PWMConfig {
+    bool Enabled;
+    uint8_t PIN_OUT;
+    uint32_t Frequence;
+    uint32_t DutyCycle; // En pourcentage
+};
+
+// Tableau pour stocker les configurations des PWM
+PWMConfig Tab_PWM[4]; // Ajuster le nombre de canaux PWM si nécessaire
+
 
 bool Tab_PCF8574_OUT_1[8];
 bool Tab_PCF8574_OUT_2[8];
@@ -272,6 +284,19 @@ int GPIO_ANA(int i, int val){
 }
 
 /**
+ * @fn ConfigTIMER(void)
+ * @brief Configure les TIMER pour l'utilisation PWM ou Servo.
+ *
+ */
+void ConfigTIMER(void) {
+  Serial.println("   Configuration des timers :");
+  ESP32PWM::allocateTimer(0);
+	ESP32PWM::allocateTimer(1);
+	ESP32PWM::allocateTimer(2);
+	ESP32PWM::allocateTimer(3);
+}
+
+/**
  * @fn ConfigServoMoteur(void)
  * @brief Configure les sorties des servomoteurs en fonction des paramètres du fichier JSON.
  *
@@ -290,7 +315,7 @@ void ConfigServoMoteur(void) {
     Tab_ServoMoteur[i].Enable = false;
     Tab_ServoMoteur[i].Defaut = 90;
     Tab_ServoMoteur[i].Angle_min = 544;
-    Tab_ServoMapterioMoteur[i].Angle_max = 2400;
+    Tab_ServoMoteur[i].Angle_max = 2400;
     Tab_ServoMoteur[i].PIN_OUT = 0;
 
     if (getStringValueFromJsonFile("/config.json", "ServoMoteur", config_json, "Enable") == "true") {
@@ -303,7 +328,7 @@ void ConfigServoMoteur(void) {
       // Initialisation du servo
       servo[i].write(Tab_ServoMoteur[i].Defaut);
       servo[i].attach(Tab_ServoMoteur[i].PIN_OUT, Tab_ServoMoteur[i].Angle_min, Tab_ServoMoteur[i].Angle_max);
-      
+
     }
   }
 }
@@ -322,6 +347,8 @@ void ServoMoteur_Desactive(int i) {
     }
 }
 
+
+
 /**
  * @fn ServoMoteur_OUT(int i, int val)
  * @brief Définit la position d'un servomoteur.
@@ -339,21 +366,58 @@ void ServoMoteur_OUT(int i, int val) {
         if (!servo[i].attached()) {
             servo[i].attach(Tab_ServoMoteur[i].PIN_OUT, Tab_ServoMoteur[i].Angle_min, Tab_ServoMoteur[i].Angle_max);
         }
-        
     }
 }
 
 /**
- * @fn ServoMoteur_maj(void)
- * @brief Met à jour les positions des servomoteurs.
+ * @brief Configure les sorties PWM en fonction des paramètres du fichier JSON.
  *
- * Cette fonction met à jour la position de chaque servomoteur en fonction
- * des valeurs stockées dans le tableau Tab_ServoMoteur.
+ * Cette fonction lit les paramètres des sorties PWM depuis un fichier JSON et initialise 
+ * les canaux PWM correspondants avec les fréquences et les cycles de service spécifiés.
+ * Les informations sur les broches et les états d'activation sont également lues depuis le fichier JSON.
+ *
+ * **Note:** Assurez-vous que la bibliothèque ESP32PWM est incluse et que le fichier JSON est 
+ * correctement formaté.
  */
-void ServoMoteur_maj(void) {
+void ConfigurePWM() {
+    String config_json;
+    unsigned char json_pin_number;
+
+    Serial.println("   PWM :");
     for (int i = 0; i < 4; i++) {
-        if (Tab_ServoMoteur[i].Enable) {
-            servo[i].write(Tab_ServoMoteur[i].Valeur);
+        config_json = String(("PWM_OUT_" + std::to_string(i + 1)).c_str());
+        Tab_PWM[i].Enabled = false;
+        Tab_PWM[i].Frequence = 5000; // Valeur par défaut
+        Tab_PWM[i].DutyCycle = 0;
+        Tab_PWM[i].PIN_OUT = 0;
+
+        if (getStringValueFromJsonFile("/config.json", "PWM", config_json, "enabled") == "true") {
+            Tab_PWM[i].Enabled = true;
+            Tab_PWM[i].Frequence = getIntValueFromJsonFile("/config.json", "PWM", config_json, "Frequency");
+            Tab_PWM[i].DutyCycle = getIntValueFromJsonFile("/config.json", "PWM", config_json, "DutyCycle");
+            Tab_PWM[i].PIN_OUT = getIntValueFromJsonFile("/config.json", "PWM", config_json, "PIN_OUT");
+            
+
+            // Initialisation du PWM
+            ledcSetup(i, Tab_PWM[i].Frequence, 8);
+            ledcAttachPin(Tab_PWM[i].PIN_OUT, i);
+            ledcWrite(i, map(Tab_PWM[i].DutyCycle, 0, 100, 0, 255));
         }
+    }
+}
+
+/**
+ * @fn PWM_OUT(int i, int val)
+ * @brief Définit le cycle de service d'une sortie PWM.
+ *
+ * Cette fonction définit le cycle de service d'une sortie PWM en fonction de son index
+ * et de la valeur souhaitée. Si le PWM n'est pas attaché, il est attaché avant de définir le cycle de service.
+ *
+ * @param i Index du PWM (0 à 3)
+ * @param val Nouveau cycle de service (entre 0 et 100)
+ */
+void PWM_OUT(int i, int val) {
+    if (i >= 0 && i < 4 && Tab_PWM[i].Enabled) {
+        ledcWrite(i, map(val, 0, 100, 0, 255)); // Mappe la valeur de 0 à 100 en une valeur de 0 à 255 pour le PWM
     }
 }

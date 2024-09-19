@@ -13,6 +13,7 @@
 #include <PubSubClient.h>
 #include <PCF8574.h>
 #include "capteurs.h"
+#include "GPIO.h"
 #include "Fonctions_MQTT.h"
 #include "reseau_serveur.h"
 #include "com_serie.h"
@@ -66,6 +67,10 @@ void setup() {
   /// @brief  Recherche des information de configuration
   ConfigGPIO();
   
+  ConfigTIMER();
+  ConfigServoMoteur();
+  ConfigurePWM();
+
   ConfigReseau();
 
   ConfigCapteur();
