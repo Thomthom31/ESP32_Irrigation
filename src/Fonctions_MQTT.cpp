@@ -396,6 +396,7 @@ void publish_s1() {
     jsonDoc.clear();
   } 
 
+
   /// @brief  Balayage des PT100
   for(int i=0; i<4; i++){
     jsonDoc["Valeur"] = Tab_PT100[i].Valeur;

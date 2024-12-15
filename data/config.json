@@ -33,7 +33,7 @@
             "Enable" : false
         },                
         "Impulsion_1": {
-            "Enable" : true,
+            "Enable" : false,
             "Quadratique" : false,
             "Temps_integration" : 10,
             "PIN_impulsion" : 13,
@@ -198,11 +198,11 @@
     },
     "ServoMoteur":{
         "ServoMoteur_OUT_1": {
-            "Enable" : false,
+            "Enable" : true,
             "Defaut" : 90,
             "Angle_min" : 544,
             "Angle_max" : 2400,
-            "PIN_OUT" : 0
+            "PIN_OUT" : 13
         },
         "ServoMoteur_OUT_2": {
             "Enable" : false,

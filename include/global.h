@@ -9,6 +9,11 @@
  */
 
 
+
+
+
+
+
 //#define DEBUG_MODE_MQTT  // Commentez ou décommentez cette ligne pour activer ou désactiver le mode de débogage
 //#define DEBUG_MODE_GPIO  // Commentez ou décommentez cette ligne pour activer ou désactiver le mode de débogage
 //#define DEBUG_MODE_CAPTEUR  // Commentez ou décommentez cette ligne pour activer ou désactiver le mode de débogage

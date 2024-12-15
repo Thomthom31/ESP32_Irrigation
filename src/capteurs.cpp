@@ -384,13 +384,13 @@ void setup_impulsion1() {
   Serial.println(F("============================================================================================"));
   Serial.println();
 
-  pinMode(Tab_Impulsion[0].PIN_compteur, INPUT);
+  pinMode(Tab_Impulsion[0].PIN_compteur, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(Tab_Impulsion[0].PIN_compteur), handleInterrupt_imp1, RISING);
   Serial.printf("Capteur initialisé sur PIN %d, activation de l'interruption sur font montant\n", Tab_Impulsion[0].PIN_compteur);
 
   // cas d'une capteur quadratique
   if(Tab_Impulsion[0].Quadratique){
-    pinMode(Tab_Impulsion[0].PIN_quadratique, INPUT);
+    pinMode(Tab_Impulsion[0].PIN_quadratique, INPUT_PULLUP);
     attachInterrupt(digitalPinToInterrupt(Tab_Impulsion[0].PIN_quadratique), handleInterrupt_imp1, RISING);
     Serial.printf("Activation du mode quadratique sur PIN %d, activation de l'interruption sur font montant\n", Tab_Impulsion[0].PIN_quadratique);
   }

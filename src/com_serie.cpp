@@ -19,6 +19,9 @@
 #include "com_serie.h"
 #include "File_System.h"
 #include "global.h"
+#include "GPIO.h"
+
+
 
 /// @var isMenuVisible
 /// @brief Permet de basculer du mode Menu au mode Défilement
@@ -106,6 +109,137 @@ void menu_serie(void)
       }
       affiche_menu();
       Serial.println("Sélectionnez une option (1/2/3/4/5/6/7) :");
+    }
+  }
+}
+
+
+
+
+String incomingData = "";  // Variable pour stocker les données reçues
+boolean isProcessing = false;  // Indicateur pour savoir si on est en train de traiter une trame
+char device;
+int deviceNumber;
+int value;
+
+void print_ack(String rep, int devicenumber, int value){
+  Serial.print(rep); // Réponse de succès
+  Serial.print(devicenumber); 
+  Serial.print(" "); 
+  Serial.println(value);  
+}
+
+void print_ack_f(String rep, int devicenumber, float value){
+  Serial.print(rep); // Réponse de succès
+  Serial.print(devicenumber); 
+  Serial.print(" "); 
+  Serial.println(value);  
+}
+
+void serialEvent() {
+
+  if(isMenuVisible) {
+    menu_serie();
+    return;
+    }
+
+  while (Serial.available() > 0) {
+    char inChar = (char)Serial.read();
+
+    if (inChar == 'm') {
+      menu_serie();  // Appel de la fonction de menu
+      return;
+      
+    } else if (isProcessing) {
+      incomingData += inChar;
+      if ((inChar == '!')||(inChar == '\n')) {
+        // Traitement de la trame complète
+        isProcessing = false;
+        // Extraire les informations de la trame 
+        device = incomingData[1];
+        deviceNumber = incomingData.substring(2, 4).toInt();
+        value = incomingData.substring(5).toInt();
+
+        // Traitement selon le type de périphérique
+        switch (device) {
+          case 'S':
+            // Commande pour un servo
+            if(ServoMoteur_OUT(deviceNumber, value)==1){
+              Serial.print(deviceNumber); 
+              print_ack("#ACK S",deviceNumber,value);          
+              }
+            else{
+              print_ack("#ERR S",deviceNumber,value);
+              }
+            break;
+
+          case 'W':
+            // Commande pour un PWM
+            if(PWM_OUT(deviceNumber, value)==1){
+              print_ack("#ACK W",deviceNumber,value);             
+              }
+            else{
+              print_ack("#ERR W",deviceNumber,value); 
+            }
+            break;   
+
+          case 'O':
+            // Commande pour une sortie GPIO
+            if(GPIO_OUT(deviceNumber, value)==1){
+              print_ack("#ACK O",deviceNumber,value);             
+              }
+            else{
+              print_ack("#ERR O",deviceNumber,value); 
+            }
+            break;  
+
+          case 'E':
+            // Commande pour une sortie PCF8574_OUT_1
+            if(PCF8574_OUT_1_out(deviceNumber, value)==1){
+              print_ack("#ACK E",deviceNumber,value);              
+              }
+            else{
+              print_ack("#ERR E",deviceNumber,value);
+            }
+            break; 
+
+          case 'I':
+            // Commande pour une entreé numérique GPIO
+            print_ack("#ACK I",deviceNumber,GPIO_IN(deviceNumber,0));
+            break;  
+
+          case 'A':
+            // Commande pour une entreé numérique GPIO
+            print_ack_f("#ACK A",deviceNumber,GPIO_ANA(deviceNumber,0));
+            break;  
+
+          case 'T':
+            // Commande pour une entreé numérique GPIO
+            print_ack_f("#ACK T",deviceNumber,Temperature());
+            break;  
+
+          case 'P':
+            // Commande pour une entreé numérique GPIO
+            print_ack_f("#ACK T",deviceNumber,Pression());
+            break;  
+
+          case 'H':
+            // Commande pour une entreé numérique GPIO
+            print_ack_f("#ACK T",deviceNumber,Humidite());
+            break;  
+
+
+
+
+          default:
+            Serial.println("#ACK 000!!!"); // Réponse d'échec
+        }
+
+        incomingData = "";
+      }
+    } else if (inChar == '#') {
+      isProcessing = true;
+      incomingData = "#";
     }
   }
 }

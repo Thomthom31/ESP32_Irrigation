@@ -11,3 +11,4 @@
  */
 
 void menu_serie(void);
+void serialEvent(void);

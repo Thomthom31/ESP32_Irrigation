@@ -124,9 +124,11 @@ void PCF8574_OUT_1_maj(){
  * @param num_port Numéro du port de sortie
  * @param val Valeur de sortie
  */
-void PCF8574_OUT_1_out(int num_port, bool val){ 
+int PCF8574_OUT_1_out(int num_port, bool val){ 
+
   Tab_PCF8574_OUT_1[num_port]=val;
   pcf8574.digitalWrite(num_port, !Tab_PCF8574_OUT_1[num_port]);
+  return 1;
 }
 
 /**
@@ -245,10 +247,17 @@ void GPIO_maj(void){
  * @param i Numéro du port GPIO
  * @param val Valeur de sortie
  */
-void GPIO_OUT(int i, int val){
+int GPIO_OUT(int i, int val){
+
   i--;
   Tab_GPIO_OUT[i].Valeur=val;
-  digitalWrite(Tab_GPIO_OUT[i].PIN, Tab_GPIO_OUT[i].Valeur);
+  if(Tab_GPIO_OUT[i].Enable){
+    digitalWrite(Tab_GPIO_OUT[i].PIN, Tab_GPIO_OUT[i].Valeur);
+    return 1;
+  }
+  else{
+    return 0;
+  }
 }
 
 /**
@@ -326,6 +335,10 @@ void ConfigServoMoteur(void) {
       Tab_ServoMoteur[i].PIN_OUT = getIntValueFromJsonFile("/config.json", "ServoMoteur", config_json, "PIN_OUT");
 
       // Initialisation du servo
+      Serial.print("     Voie ");
+      Serial.print(i);
+      Serial.print(" angle par defaut : ");
+      Serial.println(Tab_ServoMoteur[i].Defaut);      
       servo[i].write(Tab_ServoMoteur[i].Defaut);
       servo[i].attach(Tab_ServoMoteur[i].PIN_OUT, Tab_ServoMoteur[i].Angle_min, Tab_ServoMoteur[i].Angle_max);
 
@@ -354,18 +367,23 @@ void ServoMoteur_Desactive(int i) {
  * @brief Définit la position d'un servomoteur.
  *
  * Cette fonction définit la position d'un servomoteur en fonction de son index
- * et de la valeur souhaitée. Si le servomoteur n'est pas attaché, il est
+ * et de la valeur souhaitée. Si le servomoteur n'est pas attaché, il ests
  * attaché avant de définir la position.
  *
  * @param i Index du servomoteur (0 à 3)
  * @param val Nouvelle position du servomoteur (entre 0 et 180)
  */
-void ServoMoteur_OUT(int i, int val) {
+int ServoMoteur_OUT(int i, int val) {
+
     if (i >= 0 && i < 4 && Tab_ServoMoteur[i].Enable) {
         servo[i].write(val);
         if (!servo[i].attached()) {
             servo[i].attach(Tab_ServoMoteur[i].PIN_OUT, Tab_ServoMoteur[i].Angle_min, Tab_ServoMoteur[i].Angle_max);
         }
+        return 1;
+    }
+    else{
+      return 0;
     }
 }
 
@@ -416,8 +434,12 @@ void ConfigurePWM() {
  * @param i Index du PWM (0 à 3)
  * @param val Nouveau cycle de service (entre 0 et 100)
  */
-void PWM_OUT(int i, int val) {
+int PWM_OUT(int i, int val) {
     if (i >= 0 && i < 4 && Tab_PWM[i].Enabled) {
         ledcWrite(i, map(val, 0, 100, 0, 255)); // Mappe la valeur de 0 à 100 en une valeur de 0 à 255 pour le PWM
+        return 1;
+    }
+    else{
+      return 0;
     }
 }

@@ -133,7 +133,8 @@ void loop() {
   Fonction_Utilisateur();
  
   /// @brief Gestion des menus sur la liaison série
-  menu_serie();
+  //menu_serie();
+
   if(!isMenuVisible){
     Serial.print(" Temp : ");
     Serial.print(Temperature(),1);
@@ -153,7 +154,7 @@ void loop() {
   }
 
   /// @brief Temporisation de boucle
-  while(micros()<(currentTime + Periode*1000)){
+  while(micros()<(currentTime + Periode*100)){
     /// @brief Vérification de l'arrivée d'un message MQTT
     loop_MQTT();
   }
