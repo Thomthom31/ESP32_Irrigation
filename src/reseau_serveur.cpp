@@ -311,7 +311,7 @@ void setup_web(){
     server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
     String html = "<html><body>";
     html += "<h1>Données du capteur</h1>";
-    html += "<p>Température: " + String(Temperature()) + " &deg;C</p>";
+    html += "<p>Température: " + String(Temperature(0)) + " &deg;C</p>";
     html += "<p>Pression: " + String(Pression() / 100.0F) + " hPa</p>";
     html += "<p>Humidité: " + String(Humidite()) + " %</p>";
     html += "</body></html>";

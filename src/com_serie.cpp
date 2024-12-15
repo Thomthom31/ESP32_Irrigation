@@ -215,7 +215,10 @@ void serialEvent() {
 
           case 'T':
             // Commande pour une entreé numérique GPIO
-            print_ack_f("#ACK T",deviceNumber,Temperature());
+            if(deviceNumber>10){
+              deviceNumber=10;
+            }
+            print_ack_f("#ACK T",deviceNumber,Temperature(deviceNumber));
             break;  
 
           case 'P':

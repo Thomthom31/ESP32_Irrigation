@@ -137,7 +137,7 @@ void loop() {
 
   if(!isMenuVisible){
     Serial.print(" Temp : ");
-    Serial.print(Temperature(),1);
+    Serial.print(Temperature(0),1);
     Serial.print(" T max: ");
     Serial.print(Temperature_max(),1);
     Serial.print(" T min: ");

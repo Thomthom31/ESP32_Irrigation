@@ -47,7 +47,7 @@ Struct_IMP Tab_Impulsion[2];
 /** @var float temperature
  *  @brief Variable globale pour stocker la température en degrés Celsius.
  */
-float temperature = 0;
+float temperature[10];
 
 /** @var float pression
  *  @brief Variable globale pour stocker la pression en hPa.
@@ -229,25 +229,28 @@ void Config_BMx280() {
  */
 void Read_BMx280() {
   float alpha=0;
-  temperature = -100;
+  int indice_composant=0;
+  temperature[0] = -100;
+  temperature[1] = -100;
   pression = 0;
   humidite = -1;
 
   if(EnableBME280){
-    temperature = bme280.readTemperature(); // Lire la température en degrés Celsius
+    temperature[indice_composant] = bme280.readTemperature(); // Lire la température en degrés Celsius
     pression = bme280.readPressure() / 100.0F; // Lire la pression en hPa
     humidite = bme280.readHumidity();
+    indice_composant++;
   }
   if(EnableBMP280){
-    temperature = bmp280.readTemperature(); // Lire la température en degrés Celsius
+    temperature[indice_composant] = bmp280.readTemperature(); // Lire la température en degrés Celsius
     pression = bmp280.readPressure() / 100.0F; // Lire la pression en hPa
   }  
 
-  if(temperature>max_temperature){max_temperature=temperature;}
-  if(temperature<min_temperature){min_temperature=temperature;}
+  if(temperature[0]>max_temperature){max_temperature=temperature[0];}
+  if(temperature[0]<min_temperature){min_temperature=temperature[0];}
 
     // calcul du point de rosée  (formule de Heinrich Gustav Magnus-Tetens)
-  alpha = log(humidite / 100) + (17.27 * temperature) / (237.3 + temperature);
+  alpha = log(humidite / 100) + (17.27 * temperature[0]) / (237.3 + temperature[0]);
   point_de_rosee = (237.3 * alpha) / (17.27 - alpha);
 }
 
@@ -256,8 +259,8 @@ void Read_BMx280() {
  * @brief Réinitialisation des valeurs maximales et minimales de la température.
  */
 void reset_min_max() {
-  max_temperature=temperature;
-  min_temperature=temperature;
+  max_temperature=temperature[0];
+  min_temperature=temperature[0];
 }
 
 /**
@@ -265,8 +268,8 @@ void reset_min_max() {
  * @brief Obtenez la valeur de la température.
  * @return La valeur de la température en degrés Celsius.
  */
-float Temperature(void) {
-  return temperature;
+float Temperature(int indice=0) {
+  return temperature[indice];
 }
 
 /**

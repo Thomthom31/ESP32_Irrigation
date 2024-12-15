@@ -455,7 +455,8 @@ void publish_s1() {
   jsonDoc.clear();
   
   /// @brief  Publication des informations météo 
-  jsonDoc["temperature"] = Temperature();
+  jsonDoc["temperature_1"] = Temperature(0);
+  jsonDoc["temperature_2"] = Temperature(1);
   jsonDoc["temperature_max"] = Temperature_max();
   jsonDoc["temperature_min"] = Temperature_min();
   jsonDoc["pressure"] = Pression();

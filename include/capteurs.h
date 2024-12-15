@@ -13,7 +13,7 @@
 void Config_BMx280(void);
 void Read_BMx280(void);
 void reset_min_max(void);
-float Temperature(void);
+float Temperature(int indice);
 float Temperature_max(void);
 float Temperature_min(void);
 float Humidite(void);
