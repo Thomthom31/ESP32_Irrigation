@@ -146,7 +146,9 @@ void loop() {
     Serial.print(Pression(),1);
     Serial.print("hPa, Humidite : ");
     Serial.print(Humidite());
-    Serial.print("% ** ");
+    Serial.print("%, PdR : ");
+    Serial.print(Point_rosee());
+    Serial.print("°C ** ");
     Serial.print("Turbine : ");
     Serial.print(val_impulsion1());
     Serial.print(", Turbine par sec : ");

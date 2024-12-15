@@ -220,15 +220,18 @@ void serialEvent() {
 
           case 'P':
             // Commande pour une entreé numérique GPIO
-            print_ack_f("#ACK T",deviceNumber,Pression());
+            print_ack_f("#ACK P",deviceNumber,Pression());
             break;  
 
           case 'H':
             // Commande pour une entreé numérique GPIO
-            print_ack_f("#ACK T",deviceNumber,Humidite());
+            print_ack_f("#ACK H",deviceNumber,Humidite());
             break;  
 
-
+          case 'R':
+            // Commande pour une entreé numérique GPIO
+            print_ack_f("#ACK R",deviceNumber,Point_rosee());
+            break;  
 
 
           default:

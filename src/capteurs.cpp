@@ -59,6 +59,11 @@ float pression = 0;
  */
 float humidite = 0.5;
 
+/** @var float point_de_rosee
+ *  @brief Variable globale pour stocker le point de rosée.
+ */
+float point_de_rosee = 0;
+
 /** @var float max_temperature
  *  @brief Variable globale pour stocker la température maximale enregistrée.
  */
@@ -223,9 +228,10 @@ void Config_BMx280() {
  * Les valeurs sont stockées dans les variables globales correspondantes.
  */
 void Read_BMx280() {
-    temperature = -100;
-    pression = 0;
-    humidite = -1;
+  float alpha=0;
+  temperature = -100;
+  pression = 0;
+  humidite = -1;
 
   if(EnableBME280){
     temperature = bme280.readTemperature(); // Lire la température en degrés Celsius
@@ -239,6 +245,10 @@ void Read_BMx280() {
 
   if(temperature>max_temperature){max_temperature=temperature;}
   if(temperature<min_temperature){min_temperature=temperature;}
+
+    // calcul du point de rosée  (formule de Heinrich Gustav Magnus-Tetens)
+  alpha = log(humidite / 100) + (17.27 * temperature) / (237.3 + temperature);
+  point_de_rosee = (237.3 * alpha) / (17.27 - alpha);
 }
 
 /**
@@ -293,6 +303,15 @@ float Humidite(void) {
  */
 float Pression(void) {
   return pression;
+}
+
+/**
+ * @fn float Point_rosee(void)
+ * @brief Obtenez la valeur du point de rosée.
+ * @return La valeur du point de rosée.
+ */
+float Point_rosee(void) {
+  return point_de_rosee;
 }
 
 /**

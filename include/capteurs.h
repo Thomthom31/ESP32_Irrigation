@@ -18,6 +18,7 @@ float Temperature_max(void);
 float Temperature_min(void);
 float Humidite(void);
 float Pression(void);
+float Point_rosee(void);
 
 void test_i2c_capteur(void);
 
