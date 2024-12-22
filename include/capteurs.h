@@ -30,3 +30,9 @@ void maj_impulsion1(unsigned long val);
 
 void ConfigCapteur (void);
 
+
+void maj_PT100(void);
+float Val_PT100(int nb_voie);
+
+void maj_Sonde(void);
+float Val_Sonde(int nb_voie);

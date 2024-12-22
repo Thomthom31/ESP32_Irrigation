@@ -60,6 +60,9 @@ struct Struct_GPIO {
   bool Enable = false;               ///< Activation de la GPIO.
   int Valeur = 0;                    ///< Valeur de la GPIO.
   int PIN = 0;                       ///< Numéro de broche de la GPIO.
+  float Valeur_F = 0;
+  float A = 1;
+  float B = 0;
 };
 
 extern Struct_GPIO Tab_GPIO_OUT[8];  ///< Tableau des GPIO de sortie.

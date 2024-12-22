@@ -209,12 +209,12 @@ void serialEvent() {
             break;  
 
           case 'A':
-            // Commande pour une entreé numérique GPIO
+            // Commande pour une entreé analogique GPIO
             print_ack_f("#ACK A",deviceNumber,GPIO_ANA(deviceNumber,0));
             break;  
 
           case 'T':
-            // Commande pour une entreé numérique GPIO
+            // Commande pour une Temperature
             if(deviceNumber>10){
               deviceNumber=10;
             }
@@ -222,17 +222,17 @@ void serialEvent() {
             break;  
 
           case 'P':
-            // Commande pour une entreé numérique GPIO
+            // Commande pour une pression
             print_ack_f("#ACK P",deviceNumber,Pression());
             break;  
 
           case 'H':
-            // Commande pour une entreé numérique GPIO
+            // Commande pour une humdité
             print_ack_f("#ACK H",deviceNumber,Humidite());
             break;  
 
           case 'R':
-            // Commande pour une entreé numérique GPIO
+            // Commande pour un point de rosé
             print_ack_f("#ACK R",deviceNumber,Point_rosee());
             break;  
 

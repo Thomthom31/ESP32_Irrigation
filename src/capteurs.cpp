@@ -14,6 +14,7 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
 #include <Adafruit_BMP280.h>
+#include <Arduino.h>
 #include "File_System.h"
 #include "global.h"
 
@@ -473,4 +474,59 @@ float val_impulsion1_pmin() {
   lastImpulsion1Time = currentTime;
   lastImpulsion1 = turbine;
   return PulsePS;
+}
+
+/**
+ * @fn void maj_PT100(void)
+ * @brief Mesurer toutes les entrées PT100
+ * @return Void
+ */
+void maj_PT100(void){
+  for(int i=0;i<4;i++){
+    if(Tab_PT100[i].Enable==true)
+      Tab_PT100[i].Valeur_F = analogRead(Tab_PT100[i].PIN)*Tab_PT100[i].A+Tab_PT100[i].B;
+      temperature[4+i] = Tab_PT100[i].Valeur_F;
+  }
+}
+
+/**
+ * @fn float Val_PT100 (int nb_voie)
+ * @brief Mesurer toutes les entrées PT100
+ * @return Void
+ */
+float Val_PT100(int nb_voie){
+  if (nb_voie<0) {
+    nb_voie=0;
+  }
+  if (nb_voie>4){
+    nb_voie=4;
+  }
+  return Tab_PT100[nb_voie].Valeur_F;
+}
+
+/**
+ * @fn void maj_Sonde(void)
+ * @brief Mesurer toutes les entrées Sonde
+ * @return Void
+ */
+void maj_Sonde(void){
+  for(int i=0;i<4;i++){
+    if(Tab_Sonde[i].Enable==true)
+      Tab_Sonde[i].Valeur_F = analogRead(Tab_Sonde[i].PIN)*Tab_Sonde[i].A+Tab_Sonde[i].B;
+  }
+}
+
+/**
+ * @fn float Val_Sonde (int nb_voie)
+ * @brief Mesurer toutes les entrées PT100
+ * @return Void
+ */
+float Val_Sonde(int nb_voie){
+  if (nb_voie<0) {
+    nb_voie=0;
+  }
+  if (nb_voie>4){
+    nb_voie=4;
+  }
+  return Tab_Sonde[nb_voie].Valeur_F;
 }

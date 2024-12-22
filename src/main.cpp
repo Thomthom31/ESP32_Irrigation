@@ -122,6 +122,8 @@ void loop() {
   Read_BMx280();
   GPIO_maj();
   PCF8574_OUT_1_maj();
+  maj_PT100();
+  maj_Sonde();
 
   /// @brief Publication MQTT
   publish_1();
@@ -156,9 +158,10 @@ void loop() {
   }
 
   /// @brief Temporisation de boucle
-  while(micros()<(currentTime + Periode*100)){
+  while(micros()<(currentTime + Periode*10000)){
     /// @brief Vérification de l'arrivée d'un message MQTT
     loop_MQTT();
+    serialEvent();
   }
   
 }

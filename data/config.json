@@ -48,35 +48,51 @@
         },       
         "PT100_1": {
             "Enable" : false,
-            "PIN_PT100" : 0
+            "PIN_PT100" : 0,
+            "A" : 1,
+            "B" : 0
         },
         "PT100_2": {
             "Enable" : false,
-            "PIN_PT100" : 0
+            "PIN_PT100" : 0,
+            "A" : 1,
+            "B" : 0
         },
         "PT100_3": {
             "Enable" : false,
-            "PIN_PT100" : 0
+            "PIN_PT100" : 0,
+            "A" : 1,
+            "B" : 0
         },
         "PT100_4": {
             "Enable" : false,
-            "PIN_PT100" : 0
+            "PIN_PT100" : 0,
+            "A" : 1,
+            "B" : 0
         },
         "Sonde_1": {
             "Enable" : false,
-            "PIN_Sonde" : 0
+            "PIN_Sonde" : 0,
+            "A" : 1,
+            "B" : 0
         },
         "Sonde_2": {
             "Enable" : false,
-            "PIN_Sonde" : 0
+            "PIN_Sonde" : 0,
+            "A" : 1,
+            "B" : 0
         },
         "Sonde_3": {
             "Enable" : false,
-            "PIN_Sonde" : 0
+            "PIN_Sonde" : 0,
+            "A" : 1,
+            "B" : 0
         },
         "Sonde_4": {
             "Enable" : false,
-            "PIN_Sonde" : 0
+            "PIN_Sonde" : 0,
+            "A" : 1,
+            "B" : 0
         },
         "Telemetre": {
             "Enable" : false
