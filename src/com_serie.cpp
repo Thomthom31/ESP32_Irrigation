@@ -165,7 +165,6 @@ void serialEvent() {
           case 'S':
             // Commande pour un servo
             if(ServoMoteur_OUT(deviceNumber, value)==1){
-              Serial.print(deviceNumber); 
               print_ack("#ACK S",deviceNumber,value);          
               }
             else{
@@ -235,6 +234,22 @@ void serialEvent() {
             // Commande pour un point de rosé
             print_ack_f("#ACK R",deviceNumber,Point_rosee());
             break;  
+
+          case 'F' :
+            // Commande pour tout transmettre
+            Serial.println("Température/Pression/Humidite/Rosee");
+            for(int i=0;i<10;i++){
+              print_ack_f("#ACK T",i,Temperature(i));
+            }
+             print_ack_f("#ACK P",0,Pression());
+             print_ack_f("#ACK H",0,Humidite());
+             print_ack_f("#ACK R",0,Point_rosee());
+
+            Serial.println("GPIO_IN");
+            for(int i=0;i<8;i++){
+             print_ack("#ACK I",i,GPIO_IN(i,0));
+            }
+
 
 
           default:

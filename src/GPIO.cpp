@@ -53,6 +53,7 @@ struct PWMConfig {
     bool Enabled;
     uint8_t PIN_OUT;
     uint32_t Frequence;
+    uint8_t Resolution = 8;
     uint32_t DutyCycle; // En pourcentage
 };
 
@@ -406,6 +407,7 @@ void ConfigurePWM() {
         config_json = String(("PWM_OUT_" + std::to_string(i + 1)).c_str());
         Tab_PWM[i].Enabled = false;
         Tab_PWM[i].Frequence = 5000; // Valeur par défaut
+        Tab_PWM[i].Resolution = 8;
         Tab_PWM[i].DutyCycle = 0;
         Tab_PWM[i].PIN_OUT = 0;
 
@@ -413,13 +415,16 @@ void ConfigurePWM() {
             Tab_PWM[i].Enabled = true;
             Tab_PWM[i].Frequence = getIntValueFromJsonFile("/config.json", "PWM", config_json, "Frequency");
             Tab_PWM[i].DutyCycle = getIntValueFromJsonFile("/config.json", "PWM", config_json, "DutyCycle");
+            Tab_PWM[i].Resolution = getIntValueFromJsonFile("/config.json", "PWM", config_json, "Resolution");
             Tab_PWM[i].PIN_OUT = getIntValueFromJsonFile("/config.json", "PWM", config_json, "PIN_OUT");
             
 
             // Initialisation du PWM
-            ledcSetup(i, Tab_PWM[i].Frequence, 8);
+            //pinMode(ledPin, OUTPUT);
+
+            // Initialiser la bibliothèque ESP32PWM
+            ledcSetup(i, Tab_PWM[i].Frequence, Tab_PWM[i].Resolution);
             ledcAttachPin(Tab_PWM[i].PIN_OUT, i);
-            ledcWrite(i, map(Tab_PWM[i].DutyCycle, 0, 100, 0, 255));
         }
     }
 }
@@ -436,7 +441,7 @@ void ConfigurePWM() {
  */
 int PWM_OUT(int i, int val) {
     if (i >= 0 && i < 4 && Tab_PWM[i].Enabled) {
-        ledcWrite(i, map(val, 0, 100, 0, 255)); // Mappe la valeur de 0 à 100 en une valeur de 0 à 255 pour le PWM
+        ledcWrite(i, Tab_PWM[i].DutyCycle);
         return 1;
     }
     else{
